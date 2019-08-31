@@ -4,7 +4,6 @@ using EmiChoiceTravels.Models.ViewModel;
 using EmiChoiceTravels.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +25,7 @@ namespace EmiChoiceTravels.Repository
             var loginPassWord = model.Password;
             var userPasswordHash = await _ctx.Users.Where(x => x.Email.Equals(model.Email, StringComparison.InvariantCultureIgnoreCase))
                                                 .Select(x => x.PasswordHash).FirstOrDefaultAsync();
+            if(userPasswordHash == null) { return null; }
             string userPassword = Encrypt.DecryptString(userPasswordHash);
             if(loginPassWord != userPassword)
             {

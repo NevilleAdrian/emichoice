@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using EmiChoiceTravels.Repository;
 
 namespace EmiChoiceTravels
 {
@@ -52,6 +53,9 @@ namespace EmiChoiceTravels
                         IssuerSigningKey = securityKey
                     };
                 });
+            services.AddTransient<AuthRepository>();
+            services.AddTransient<AccountRepository>();
+            services.AddHttpClient();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

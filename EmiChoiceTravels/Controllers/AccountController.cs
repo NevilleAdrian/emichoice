@@ -28,6 +28,22 @@ namespace EmiChoiceTravels.Controllers
                 {
                     return Ok(token);
                 }
+                return BadRequest(new { data = "user not found" });
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Post([FromBody] RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string token = await _acc.RegisterUser(model);
+                if (token != null)
+                {
+                    return Ok(token);
+                }
+                return BadRequest(new { data = "could not add user" });
             }
             return BadRequest(ModelState);
         }
